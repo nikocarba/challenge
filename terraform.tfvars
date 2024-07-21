@@ -1,0 +1,1 @@
+raw_bucket_name = "raw-bucket-test-terraform-ncarballal"
