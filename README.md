@@ -59,33 +59,89 @@ CREATE OR REPLACE TABLE SNOWFLAKE_DATABASE.SNOWFLAKE_SCHEMA.CUSTOMER_SEGMENTATIO
 
 ## Setup
 
-1. **Create a Role for Terraform:**
-   Create an IAM role in AWS with a basic policy that allows Terraform to manage resources. Here’s an example of a policy that provides the necessary permissions:
+1. **Create a Role for Terraform (OPTIONAL):**
+   Create an IAM user in AWS with the following policy to allow Terraform to manage resources:
    ```json
-   {
-     "Version": "2012-10-17",
-     "Statement": [
-       {
-         "Effect": "Allow",
-         "Action": [
-           "ec2:*",
-           "s3:*",
-           "iam:*",
-           "rds:*",
-           "lambda:*",
-           "cloudwatch:*",
-           "secretsmanager:*",
-           "glue:*"
-         ],
-         "Resource": "*"
-       }
-     ]
-   }
+	{
+	    "Version": "2012-10-17",
+	    "Statement": [
+	        {
+	            "Effect": "Allow",
+	            "Action": [
+	                "s3:*",
+	                "s3-object-lambda:*"
+	            ],
+	            "Resource": "*"
+	        },
+			{
+	            "Effect": "Allow",
+	            "Action": "iam:PassRole",
+	            "Resource": "*",
+	            "Condition": {
+	                "StringEquals": {
+	                    "iam:PassedToService": "glue.amazonaws.com"
+	                }
+	            }
+	        },
+			{
+	            "Effect": "Allow",
+	            "Action": [
+	                "glue:CreateJob",
+	                "glue:GetJobs",
+	                "glue:BatchGetJobs",
+	                "glue:UpdateJob",
+	                "glue:DeleteJob",
+	                "glue:GetTags",
+	                "glue:GetJob"
+	            ],
+	            "Resource": "*"
+	        },
+			{
+	            "Effect": "Allow",
+	            "Action": [
+	                "secretsmanager:GetResourcePolicy",
+	                "secretsmanager:UntagResource",
+	                "secretsmanager:DescribeSecret",
+	                "secretsmanager:PutSecretValue",
+	                "secretsmanager:CreateSecret",
+	                "secretsmanager:DeleteSecret",
+	                "secretsmanager:TagResource",
+	                "secretsmanager:UpdateSecret",
+	                "secretsmanager:GetSecretValue",
+	                "secretsmanager:ListSecrets"
+	            ],
+	            "Resource": "*"
+	        },
+			{
+	            "Effect": "Allow",
+	            "Action": [
+	                "iam:GetRole",
+	                "iam:UpdateAssumeRolePolicy",
+	                "iam:ListRoleTags",
+	                "iam:UntagRole",
+	                "iam:TagRole",
+	                "iam:ListRoles",
+	                "iam:CreateRole",
+	                "iam:DeleteRole",
+	                "iam:AttachRolePolicy",
+	                "iam:PutRolePolicy",
+	                "iam:ListInstanceProfilesForRole",
+	                "iam:PassRole",
+	                "iam:DetachRolePolicy",
+	                "iam:ListAttachedRolePolicies",
+	                "iam:DeleteRolePolicy",
+	                "iam:UpdateRole",
+	                "iam:ListRolePolicies",
+	                "iam:GetRolePolicy"
+	            ],
+	            "Resource": "*"
+	        }
+	    ]
+	}
    ```
-   Attach this policy to the new IAM role.
 
 2. **Configure AWS Credentials:**
-   Use the AWS CLI to configure credentials for Terraform to use. The account used for this configuration will be used for the following steps, so it should have permissions to deploy the entire architecture, create a secret in Secrets Manager, and create a Glue connection.
+   Use the AWS CLI to configure credentials for Terraform to use. The account used for this configuration will be needed for the following steps, so it should have permissions to deploy the entire architecture, create a secret in Secrets Manager, and create a Glue connection. You may use the user created on the previous step.
    ```sh
    aws configure
    ```
