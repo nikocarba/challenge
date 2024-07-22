@@ -1,0 +1,18 @@
+{
+    "snowflake_db": "SNOWFLAKE_DATABASE",
+    "snowflake_schema": "SNOWFLAKE_SCHEMA", 
+    "snowflake_table": "CUSTOMER_SEGMENTATION_DATA",
+    "sfWarehouse": "COMPUTE_WH",
+    "sfRole": "ACCOUNTADMIN",
+    "rename_cols": {
+        "Behavioral Data": "BEHAVIORAL_DATA_POLICY",
+        "Insurance Products Owned": "INSURANCE_PRODUCTS_OWNED_POLICY"
+    },
+    "remove_from_col": {
+        "PREFERRED_COMMUNICATION_CHANNEL": " Meeting",
+        "CUSTOMER_PREFERENCES": " Meeting",
+        "INSURANCE_PRODUCTS_OWNED_POLICY": "policy",
+        "BEHAVIORAL_DATA_POLICY": "policy",
+        "SEGMENTATION_GROUP": "Segment"
+    }
+}

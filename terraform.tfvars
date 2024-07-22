@@ -1,13 +1,15 @@
-raw_bucket_name = "raw-bucket-test-terraform-ncarballal"
+project = "dataengineer-challenge"
 
-artifacts_bucket_name = "artifacts-bucket-test-terraform-ncarballal"
+owner = "ncarballal"
 
-glue_job_name = "raw_data_to_snowflake"
+raw_table_name = "customer_segmentation_data"
 
 spark_arguments = {
-    "--enable-auto-scaling" = "true"
-    "--enable-job-insights" = "false"
-    "--job-language"        = "python"
-    "--extra-jars"          = null
-    "--TABLE_NAME"          = "customer_segmentation_data"
+    "--enable-auto-scaling"               = "true"
+    "--enable-job-insights"               = "false"
+    "--job-language"                      = "python"
+    "--extra-jars"                        = null
+    "--enable-continuous-cloudwatch-log"  = "true"
 }
+
+snowflake_secret_name = "snowflake_ncarballal"
