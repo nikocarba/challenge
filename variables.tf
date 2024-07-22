@@ -9,13 +9,16 @@ variable "owner" {
 }
 
 variable "spark_arguments" {
+  description = "Default arguments for the glue job."
   type = any
 }
 
 variable "raw_table_name" {
-    type = string
+  description = "Raw table name to process."
+  type = string
 }
 
 variable "snowflake_secret_name" {
-    type = string
+  description = "Previously created secret name."
+  type = string
 }

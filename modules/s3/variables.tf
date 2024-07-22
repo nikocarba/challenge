@@ -9,15 +9,16 @@ variable "artifacts_bucket_name" {
 }
 
 variable "s3_bucket_tags" {
-  description = "Tags for the S3 bucket"
+  description = "Tags for the S3 bucket."
   type        = map(string)
 }
 
 variable "script_path" {
-  description  = "The path in s3 to the glue job script"
+  description  = "The path in s3 to the glue job script."
   type         = string
 }
 
 variable "raw_table_name" {
+  description = "Raw table name to process."
   type = string
 }

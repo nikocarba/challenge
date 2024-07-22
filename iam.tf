@@ -1,4 +1,4 @@
-resource "aws_iam_role" "test_role" {
+resource "aws_iam_role" "glue_role" {
   name = "${var.project}-glue-role"
 
   assume_role_policy = jsonencode({
@@ -7,7 +7,6 @@ resource "aws_iam_role" "test_role" {
       {
         Action = "sts:AssumeRole"
         Effect = "Allow"
-        Sid    = ""
         Principal = {
           Service = "glue.amazonaws.com"
         }
@@ -18,9 +17,9 @@ resource "aws_iam_role" "test_role" {
   tags = local.project_tags
 }
 
-resource "aws_iam_role_policy" "test_policy" {
+resource "aws_iam_role_policy" "glue_policy" {
   name = "${var.project}-policy"
-  role = aws_iam_role.test_role.id
+  role = aws_iam_role.glue_role.id
 
   policy = jsonencode({
     "Version": "2012-10-17",

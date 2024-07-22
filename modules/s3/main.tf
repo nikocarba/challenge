@@ -26,10 +26,10 @@ resource "aws_s3_object" "glue-script" {
 
 resource "aws_s3_object" "etl-configs" {
   bucket = aws_s3_bucket.artifacts-bucket.id
-  key    = "etl-configs/customer_segmentation_data.json"
-  source = "./etl-configs/customer_segmentation_data.json"
+  key    = "etl-configs/${var.raw_table_name}.json"
+  source = "./etl-configs/${var.raw_table_name}.json"
 
-  etag = filemd5("./etl-configs/customer_segmentation_data.json")
+  etag = filemd5("./etl-configs/${var.raw_table_name}.json")
 }
 
 resource "aws_s3_object" "jdbc-driver" {

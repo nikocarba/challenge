@@ -16,7 +16,7 @@ module "glue" {
     spark_configurations    = local.spark_configurations
     artifacts_bucket_name   = local.artifacts_bucket_name
     script_path             = local.script_path
-    glue_role               = aws_iam_role.test_role.arn
+    glue_role               = aws_iam_role.glue_role.arn
     glue_tags               = local.project_tags
 }
 
