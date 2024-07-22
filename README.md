@@ -5,10 +5,9 @@ This project uses Terraform to create AWS resources and facilitates data loading
 ## Table of Contents
 - [Prerequisites](#prerequisites)
 - [Architecture](#architecture)
-- [Approach](#approach)
+- [Snowflake](#Snowflake)
 - [Setup](#setup)
 - [Usage](#usage)
-- [Configuration](#configuration)
 
 ## Prerequisites
 - [Terraform](https://www.terraform.io/downloads.html) v0.12 or later
@@ -21,13 +20,42 @@ This project provisions the following AWS resources:
 - S3 bucket: To store data files
 - IAM roles and policies: To manage permissions
 - AWS Glue: To orchestrate the ETL process
-- Secrets Manager: To store Snowflake credentials
 - CloudWatch: For logging and monitoring
 
 The data is loaded into Snowflake using Snowflake's [SPARK CONNECTOR](https://docs.snowflake.com/en/user-guide/spark-connector-overview).
 
 ![image](https://github.com/user-attachments/assets/acfa01eb-52b1-4000-8dcf-565be16747a0)
 
+## Snowflake
+The following SQL scripts were used to setup the snowflake DW.
+```sql
+CREATE OR REPLACE DATABASE snowflake_database;
+
+CREATE OR REPLACE SCHEMA snowflake_database.snowflake_schema;
+
+CREATE OR REPLACE TABLE SNOWFLAKE_DATABASE.SNOWFLAKE_SCHEMA.CUSTOMER_SEGMENTATION_DATA (
+	CUSTOMER_ID NUMBER(38,0),
+	AGE VARCHAR(3),
+	GENDER VARCHAR(1),
+	MARITAL_STATUS VARCHAR(16),
+	EDUCATION_LEVEL VARCHAR(32),
+	GEOGRAPHIC_INFORMATION VARCHAR(32),
+	OCCUPATION VARCHAR(16),
+	INCOME_LEVEL NUMBER(38,0),
+	BEHAVIORAL_DATA_POLICY VARCHAR(1),
+	PURCHASE_HISTORY DATE,
+	INTERACTIONS_WITH_CUSTOMER_SERVICE VARCHAR(16),
+	INSURANCE_PRODUCTS_OWNED_POLICY VARCHAR(1),
+	COVERAGE_AMOUNT NUMBER(38,0),
+	PREMIUM_AMOUNT NUMBER(38,0),
+	POLICY_TYPE VARCHAR(16),
+	CUSTOMER_PREFERENCES VARCHAR(16),
+	PREFERRED_COMMUNICATION_CHANNEL VARCHAR(16),
+	PREFERRED_CONTACT_TIME VARCHAR(16),
+	PREFERRED_LANGUAGE VARCHAR(16),
+	SEGMENTATION_GROUP VARCHAR(1)
+);
+```
 
 ## Setup
 
@@ -104,7 +132,7 @@ The data is loaded into Snowflake using Snowflake's [SPARK CONNECTOR](https://do
    Use CloudWatch to monitor the logs and ensure the data loading process completes successfully.
 
 4. **Validate data in Snowflake:**
-   Once the data is loaded, validate it in Snowflake using some queries. For example:
+   Once the job finished executing, validate data in Snowflake using the following queries:
    ```sql
    -- Count the number of rows in a table
    SELECT COUNT(*) FROM CUSTOMER_SEGMENTATION_DATA;
