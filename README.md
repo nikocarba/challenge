@@ -59,7 +59,7 @@ CREATE OR REPLACE TABLE SNOWFLAKE_DATABASE.SNOWFLAKE_SCHEMA.CUSTOMER_SEGMENTATIO
 
 ## Setup
 
-1. **Create a Role for Terraform (OPTIONAL):**
+1. **Create a User for Terraform (OPTIONAL):**
    Create an IAM user in AWS with the following policy to allow Terraform to manage resources:
    ```json
 	{
