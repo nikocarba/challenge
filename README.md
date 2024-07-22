@@ -5,6 +5,7 @@ This project uses Terraform to create AWS resources and facilitates data loading
 ## Table of Contents
 - [Prerequisites](#prerequisites)
 - [Architecture](#architecture)
+- [Approach](#approach)
 - [Setup](#setup)
 - [Usage](#usage)
 - [Configuration](#configuration)
@@ -27,8 +28,23 @@ This project provisions the following AWS resources:
 
 The data is loaded into Snowflake using Snowflake's [SPARK CONNECTOR](https://docs.snowflake.com/en/user-guide/spark-connector-overview).
 
+![image](https://github.com/user-attachments/assets/acfa01eb-52b1-4000-8dcf-565be16747a0)
+
+
+## Approach
+
+
 ## Setup
 
+
+
+1. **Create a Role for Terraform:**
+   Create an IAM role in AWS with the following policies that allows Terraform to manage resources or:
+   ```sh
+   git clone https://github.com/yourusername/aws-snowflake-loader.git
+   cd aws-snowflake-loader
+   ```
+   
 1. **Clone the repository:**
    ```sh
    git clone https://github.com/yourusername/aws-snowflake-loader.git
@@ -40,7 +56,7 @@ The data is loaded into Snowflake using Snowflake's [SPARK CONNECTOR](https://do
    terraform init
    ```
 
-3. **Configure Terraform variables:**
+3. **Configure the secret :**
    Create a `terraform.tfvars` file and populate it with your configuration.
    ```hcl
    aws_region = "us-west-2"
