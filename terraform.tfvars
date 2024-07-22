@@ -1,6 +1,8 @@
-project = "dataengineer-challenge"
+snowflake_secret_name = ""
 
 owner = "ncarballal"
+
+project = "dataengineer-challenge"
 
 raw_table_name = "customer_segmentation_data"
 
@@ -11,5 +13,3 @@ spark_arguments = {
     "--extra-jars"                        = null
     "--enable-continuous-cloudwatch-log"  = "true"
 }
-
-snowflake_secret_name = "snowflake_ncarballal"

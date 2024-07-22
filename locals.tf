@@ -10,7 +10,6 @@ locals {
         "--RAW_BUCKET"          = local.raw_bucket_name
         "--SECRET_NAME"         = var.snowflake_secret_name
         "--ARTIFACTS_BUCKET"    = local.artifacts_bucket_name
-        #"--extra-jars"          = "s3://${local.artifacts_bucket_name}/drivers/snowflake-jdbc-3.16.1.jar,s3://${local.artifacts_bucket_name}/drivers/spark-snowflake_2.13-2.16.0-spark_3.3.jar"
         "--extra-jars"          = "s3://${local.artifacts_bucket_name}/${module.s3.jdbc-driver},s3://${local.artifacts_bucket_name}/${module.s3.spark-snowflake-driver}"
     }
 
