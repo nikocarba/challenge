@@ -1,4 +1,4 @@
-# Santex challenge
+# Data challenge
 
 This project uses Terraform to create AWS resources and facilitates data loading onto Snowflake. It sets up the necessary infrastructure and scripts to automate the data pipeline.
 
