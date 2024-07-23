@@ -160,7 +160,7 @@ CREATE OR REPLACE TABLE SNOWFLAKE_DATABASE.SNOWFLAKE_SCHEMA.CUSTOMER_SEGMENTATIO
 	"sfAccount":"your_snowflake_account"
    }
    ```
-   Obs: Remember to use "-" instead of "." for the sfAccount.
+   Obs: Use "-" instead of "." for the sfAccount.
 
 4. **Create a Glue Connection to Snowflake:**
    Create an AWS Glue connection named "Snowflake connection" that holds the Snowflake account URL and references the secret just created in the AWS console. The glue job in the project used to load data onto Snowflake      will need this connection.
