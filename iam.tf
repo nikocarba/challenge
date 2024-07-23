@@ -26,7 +26,10 @@ resource "aws_iam_role_policy" "glue_policy" {
     "Statement": [
         {
             "Effect": "Allow",
-            "Action": "glue:GetConnection",
+            "Action": [
+              "glue:GetConnection",
+              "cloudwatch:*"
+            ],
             "Resource": "*"
         },
         {

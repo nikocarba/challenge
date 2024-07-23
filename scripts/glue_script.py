@@ -3,12 +3,15 @@ from botocore.exceptions import ClientError
 import os
 import sys
 import json
+import pytz 
+from datetime import datetime as dt
 from awsglue.transforms import *
 from awsglue.utils import getResolvedOptions
 from awsglue.context import GlueContext
 from awsglue.job import Job
 from pyspark.context import SparkContext
-from pyspark.sql.functions import to_date, regexp_replace, expr, lpad
+from pyspark.sql.functions import to_date, regexp_replace, expr, lpad, lit, to_date
+from pyspark.sql.types import StringType
 import logging
 
 
@@ -117,6 +120,10 @@ df = normalize_genders(df, ["GENDER"])
 for key in configs['remove_from_col'].keys():
     df = remove_from_col(key, configs['remove_from_col'][key])
 
+df = df.withColumn('ID', lit(None).cast(StringType()))
+current_date = dt.now(pytz.timezone('America/Argentina/Buenos_Aires')).strftime('%Y-%m-%d %H:%M:%S')
+df = df.withColumn('LOAD_TIME', to_date(lit(current_date), '%y-%M-%d %H:%m:%s'))
+
 #WRITE TO SNOWFLAKE
 secret = get_secret(secret_name)
 
@@ -133,7 +140,8 @@ sfOptions = {
 df.write.format("net.snowflake.spark.snowflake")\
     .options(**sfOptions)\
     .option("dbtable", configs['snowflake_table'])\
+    .option("column_mapping", "name")\
     .option("truncate_table", "on")\
-    .mode("overwrite").save() #The truncate_table option ensures the original schema of the target table is kept
+    .mode("append").save() #The truncate_table option ensures the original schema of the target table is kept
 
 job.commit()
