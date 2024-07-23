@@ -151,9 +151,14 @@ CREATE OR REPLACE TABLE SNOWFLAKE_DATABASE.SNOWFLAKE_SCHEMA.CUSTOMER_SEGMENTATIO
    Enter your AWS Access Key ID, Secret Access Key, default region name, and output format when prompted.
 
 3. **Create a Secret in AWS Secrets Manager:**
-   Store your Snowflake credentials in AWS Secrets Manager. The secret should contain the following keys: `sfUser`, `sfPassword`, `sfAccount`.
+   Store your Snowflake credentials in AWS Secrets Manager. The secret should contain the following keys: `sfUser`, `sfPassword`, `sfAccount`. Use the following json example, replacing with your credentials, to create 
+   the secret as plain text from the console by selecting "Other type of secret" option.
    ```sh
-   aws secretsmanager create-secret --name snowflake-credentials --secret-string '{"sfUser":"your_snowflake_user","sfPassword":"your_snowflake_password","sfAccount":"your_snowflake_account"}'
+   {
+	"sfUser":"your_snowflake_user",
+	"sfPassword":"your_snowflake_password",
+	"sfAccount":"your_snowflake_account"
+   }
    ```
 
 4. **Create a Glue Connection to Snowflake:**
