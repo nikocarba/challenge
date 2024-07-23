@@ -178,9 +178,8 @@ CREATE OR REPLACE TABLE SNOWFLAKE_DATABASE.SNOWFLAKE_SCHEMA.CUSTOMER_SEGMENTATIO
 
 7. **Configure Terraform variable:**
    Assign the secret name you created on step 3 to the variable "snowflake_secret_name" in terraform.tfvars file.
-   Obs: snowflake-credentials is the name of the secret in case you used the command provided.
 
-9. **Plan and apply the Terraform configuration:**
+8. **Plan and apply the Terraform configuration:**
    ```sh
    terraform plan
    terraform apply
