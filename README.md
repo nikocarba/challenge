@@ -34,6 +34,7 @@ CREATE OR REPLACE DATABASE snowflake_database;
 CREATE OR REPLACE SCHEMA snowflake_database.snowflake_schema;
 
 CREATE OR REPLACE TABLE SNOWFLAKE_DATABASE.SNOWFLAKE_SCHEMA.CUSTOMER_SEGMENTATION_DATA (
+	ID NUMBER(38,0) NOT NULL autoincrement start 1 increment 1 noorder,
 	CUSTOMER_ID NUMBER(38,0),
 	AGE VARCHAR(3),
 	GENDER VARCHAR(1),
@@ -53,7 +54,8 @@ CREATE OR REPLACE TABLE SNOWFLAKE_DATABASE.SNOWFLAKE_SCHEMA.CUSTOMER_SEGMENTATIO
 	PREFERRED_COMMUNICATION_CHANNEL VARCHAR(16),
 	PREFERRED_CONTACT_TIME VARCHAR(16),
 	PREFERRED_LANGUAGE VARCHAR(16),
-	SEGMENTATION_GROUP VARCHAR(1)
+	SEGMENTATION_GROUP VARCHAR(1),
+	LOAD_TIME TIMESTAMP_NTZ(9),
 );
 ```
 
@@ -148,10 +150,16 @@ CREATE OR REPLACE TABLE SNOWFLAKE_DATABASE.SNOWFLAKE_SCHEMA.CUSTOMER_SEGMENTATIO
    Enter your AWS Access Key ID, Secret Access Key, default region name, and output format when prompted.
 
 3. **Create a Secret in AWS Secrets Manager:**
-   Store your Snowflake credentials in AWS Secrets Manager. The secret should contain the following keys: `sfUser`, `sfPassword`, `sfAccount`.
+   Store your Snowflake credentials in AWS Secrets Manager. The secret should contain the following keys: `sfUser`, `sfPassword`, `sfAccount`. Use the following json example, replacing with your credentials, to create 
+   the secret as plain text from the console by selecting "Other type of secret" option.
    ```sh
-   aws secretsmanager create-secret --name snowflake-credentials --secret-string '{"sfUser":"your_snowflake_user","sfPassword":"your_snowflake_password","sfAccount":"your_snowflake_account"}'
+   {
+	"sfUser":"your_snowflake_user",
+	"sfPassword":"your_snowflake_password",
+	"sfAccount":"your_snowflake_account"
+   }
    ```
+   Obs: Use "-" instead of "." for the sfAccount.
 
 4. **Create a Glue Connection to Snowflake:**
    Create an AWS Glue connection named "Snowflake connection" that holds the Snowflake account URL and references the secret just created in the AWS console. The glue job in the project used to load data onto Snowflake      will need this connection.
