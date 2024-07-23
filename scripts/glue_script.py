@@ -120,7 +120,6 @@ df = normalize_genders(df, ["GENDER"])
 for key in configs['remove_from_col'].keys():
     df = remove_from_col(key, configs['remove_from_col'][key])
 
-df = df.withColumn('ID', lit(None).cast(StringType()))
 current_date = dt.now(pytz.timezone('America/Argentina/Buenos_Aires')).strftime('%Y-%m-%d %H:%M:%S')
 df = df.withColumn('LOAD_TIME', to_date(lit(current_date), '%y-%M-%d %H:%m:%s'))
 
@@ -141,6 +140,7 @@ df.write.format("net.snowflake.spark.snowflake")\
     .options(**sfOptions)\
     .option("dbtable", configs['snowflake_table'])\
     .option("column_mapping", "name")\
+    .option("column_mismatch_behavior", "ignore")\
     .option("truncate_table", "on")\
     .mode("append").save() #The truncate_table option ensures the original schema of the target table is kept
 
