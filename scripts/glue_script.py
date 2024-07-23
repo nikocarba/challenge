@@ -133,6 +133,7 @@ sfOptions = {
 df.write.format("net.snowflake.spark.snowflake")\
     .options(**sfOptions)\
     .option("dbtable", configs['snowflake_table'])\
-    .mode("overwrite").save()
+    .option("truncate_table", "on")\
+    .mode("overwrite").save() #The truncate_table option ensures the original schema of the target table is kept
 
 job.commit()
