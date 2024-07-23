@@ -120,7 +120,7 @@ for key in configs['remove_from_col'].keys():
     df = remove_from_col(key, configs['remove_from_col'][key])
 
 current_date = dt.now(pytz.timezone('America/Argentina/Buenos_Aires')).strftime('%Y-%m-%d %H:%M:%S')
-df = df.withColumn('LOAD_TIME', to_timestamp(lit(current_date), '%y-%M-%d %H:%m:%s'))
+df = df.withColumn('LOAD_TIME', to_timestamp(lit(current_date), 'yyyy-MM-dd HH:mm:ss'))
 
 #WRITE TO SNOWFLAKE
 secret = get_secret(secret_name)
