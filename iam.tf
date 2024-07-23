@@ -41,6 +41,18 @@ resource "aws_iam_role_policy" "glue_policy" {
             "Effect": "Allow",
             "Action": "s3:GetObject",
             "Resource": "arn:aws:s3:::*${var.project}-${var.owner}/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": [
+                "arn:aws:logs:*:*:*:/aws-glue/*",
+                "arn:aws:logs:*:*:*:/customlogs/*"
+            ]
         }
     ]
 })
