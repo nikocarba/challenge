@@ -10,8 +10,7 @@ from awsglue.utils import getResolvedOptions
 from awsglue.context import GlueContext
 from awsglue.job import Job
 from pyspark.context import SparkContext
-from pyspark.sql.functions import to_date, regexp_replace, expr, lpad, lit, to_date
-from pyspark.sql.types import StringType
+from pyspark.sql.functions import to_timestamp, regexp_replace, expr, lpad, lit, to_date
 import logging
 
 
@@ -121,7 +120,7 @@ for key in configs['remove_from_col'].keys():
     df = remove_from_col(key, configs['remove_from_col'][key])
 
 current_date = dt.now(pytz.timezone('America/Argentina/Buenos_Aires')).strftime('%Y-%m-%d %H:%M:%S')
-df = df.withColumn('LOAD_TIME', to_date(lit(current_date), '%y-%M-%d %H:%m:%s'))
+df = df.withColumn('LOAD_TIME', to_timestamp(lit(current_date), '%y-%M-%d %H:%m:%s'))
 
 #WRITE TO SNOWFLAKE
 secret = get_secret(secret_name)
