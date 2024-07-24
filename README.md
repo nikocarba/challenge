@@ -144,7 +144,7 @@ CREATE OR REPLACE TABLE SNOWFLAKE_DATABASE.SNOWFLAKE_SCHEMA.CUSTOMER_SEGMENTATIO
    ```
 
 2. **Configure AWS Credentials:**
-   Use the AWS CLI to configure credentials for Terraform to use. The account used for this configuration will be needed for the following steps, so it should have permissions to deploy the entire architecture, create a secret in Secrets Manager, and create a Glue connection. You may use the user created on the previous step.
+   Use the AWS CLI to configure credentials for Terraform to use. The account used for this configuration will be needed for the following steps, so it should have permissions to deploy the entire architecture. You may use the user created on the previous step.
    ```sh
    aws configure
    ```
